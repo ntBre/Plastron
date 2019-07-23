@@ -1,0 +1,7 @@
+** Ways to move atoms:
+*** moved_coord_array = coord_array * rand_array + coord_array
+	multiplying by random and adding back to original
+*** moved_coord_array = coord_array**2 * rand_array + coord_array
+	squaring, multiplying and adding
+*** Step random atom a little and check energy
+	Probably the right answer all along

@@ -1,4 +1,6 @@
-# plastron.py
+""" plastron.py
+A module for generating molecular configurations """
+
 import numpy as np
 
 def print_xyz(filename):
@@ -38,21 +40,27 @@ def write_xyz(filename, num_atoms, comment, atoms, coords):
     for atom in range(len(atoms)):
         atom_coord = '\t'.join(map(str, coords[atom]))
         outfile.writelines(str(atoms[atom]) + '\t' +
-                     atom_coord + '\n')
+                           atom_coord + '\n')
     outfile.close()
 
 
 def move_atoms(coord_array):
     """ Takes a numpy array of atomic coordinates as an argument and returns
         an updated array after moving the atoms """
-
-    return coord_array
+    rows = len(coord_array)
+    cols = len(coord_array[0])
+    rand_array = np.random.rand(rows, cols) * 2 - 1
+    moved_coord_array = coord_array * rand_array + coord_array
+    return moved_coord_array
 
 
 def main():
-    
-    write_xyz("pyridine.xyz", *read_xyz("pyridine.xyz")) # * explodes tuple
-
+    """ Main method """
+    filename = "pyridine.xyz"
+    print_xyz(filename)
+    num_atoms, comment, atoms, coords = read_xyz(filename)
+    new_coords = move_atoms(coords)
+    write_xyz(filename, num_atoms, comment, atoms, new_coords)
+    print_xyz("new-" + filename)
 
 main()
-
